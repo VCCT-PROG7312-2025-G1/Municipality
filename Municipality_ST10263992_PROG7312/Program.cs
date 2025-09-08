@@ -16,7 +16,7 @@ namespace Municipality_ST10263992_PROG7312
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new frmMainMenu());
         }
     }
 }

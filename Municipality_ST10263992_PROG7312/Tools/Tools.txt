@@ -1,0 +1,7 @@
+--text: #e3e2ec;
+--background: #0d0d15;
+--primary: #a5a2cb;
+--secondary: #3b386b;
+--accent: #7570ba;
+
+437, 352 --> 218, 176
