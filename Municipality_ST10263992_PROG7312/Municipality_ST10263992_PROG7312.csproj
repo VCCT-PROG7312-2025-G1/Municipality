@@ -103,6 +103,7 @@
     <Content Include="Tools\Images\Mpumalanga.png" />
     <Content Include="Tools\Images\North_West.png" />
     <Content Include="Tools\Images\Northern_Cape.png" />
+    <None Include="Tools\Images\Provinces.png" />
     <Content Include="Tools\Images\Western_Cape.png" />
     <Content Include="Tools\Tools.txt" />
   </ItemGroup>

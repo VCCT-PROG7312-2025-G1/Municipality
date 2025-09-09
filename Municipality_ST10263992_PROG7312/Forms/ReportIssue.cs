@@ -17,6 +17,12 @@ namespace Municipality_ST10263992_PROG7312.Forms
         public frmReportIssues()
         {
             InitializeComponent();
+            pnlMainPage.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.SecondaryColour);
+            pnlMainMenuInner.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.OtherColour);
+            btnSubmit.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonColour);
+            btnMedia.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonColour);
+            panel1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.AccentColour);
+
 
             cmbCategory.Items.AddRange(new string[] { "Pothole", "Burst Pipe", "Power Outage", "Street Light Fault", "Garbage Collection", "Other" });
         }
@@ -41,7 +47,9 @@ namespace Municipality_ST10263992_PROG7312.Forms
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            frmMainMenu mainMenuForm = new frmMainMenu();
+            this.Hide();
+            mainMenuForm.Show();
         }
 
 

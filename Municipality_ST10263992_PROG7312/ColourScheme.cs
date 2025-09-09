@@ -14,6 +14,11 @@ namespace Municipality_ST10263992_PROG7312
         public static readonly string PrimaryColour = "a5a2cb";
         public static readonly string SecondaryColour = "3b386b";
         public static readonly string AccentColour = "7570ba";
-
+        public static readonly string OtherColour = "ab94a6";
+        public static readonly string ButtonColour = "515151";
+        public static readonly string ButtonHoverColour = "3b3b3b";
+        public static readonly string ButtonClickColour = "8c8c8c";
+        public static readonly string ErrorColour = "ff0000";
+        public static readonly string Text_Colour = "ffffff";
     }
 }
