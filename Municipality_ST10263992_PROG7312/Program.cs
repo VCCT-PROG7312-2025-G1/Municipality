@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace Municipality_ST10263992_PROG7312
 {
@@ -20,3 +21,4 @@ namespace Municipality_ST10263992_PROG7312
         }
     }
 }
+

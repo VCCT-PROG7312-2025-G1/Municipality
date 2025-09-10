@@ -76,5 +76,15 @@ namespace Municipality_ST10263992_PROG7312
         {
             redReportText.Text = Database.Instance.PrintRecentIssues();
         }
+
+        private void btnStatus_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Status feature is under development.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnEvents_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Events feature is under development.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

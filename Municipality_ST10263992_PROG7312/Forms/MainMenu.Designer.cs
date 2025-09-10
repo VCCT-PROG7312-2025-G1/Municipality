@@ -143,6 +143,7 @@
             this.btnEvents.TabIndex = 1;
             this.btnEvents.Text = "Events";
             this.btnEvents.UseVisualStyleBackColor = true;
+            this.btnEvents.Click += new System.EventHandler(this.btnEvents_Click);
             // 
             // pnlMainMenuInner1
             // 
@@ -239,6 +240,7 @@
             this.btnStatus.TabIndex = 2;
             this.btnStatus.Text = "Status";
             this.btnStatus.UseVisualStyleBackColor = true;
+            this.btnStatus.Click += new System.EventHandler(this.btnStatus_Click);
             // 
             // pnlHead1
             // 
@@ -254,9 +256,9 @@
             // 
             this.panel4.Controls.Add(this.label1);
             this.panel4.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
-            this.panel4.Location = new System.Drawing.Point(52, 78);
+            this.panel4.Location = new System.Drawing.Point(33, 78);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(199, 60);
+            this.panel4.Size = new System.Drawing.Size(246, 60);
             this.panel4.TabIndex = 1;
             // 
             // label1
@@ -266,11 +268,11 @@
             this.label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
-            this.label1.Location = new System.Drawing.Point(17, 15);
+            this.label1.Location = new System.Drawing.Point(12, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(168, 31);
+            this.label1.Size = new System.Drawing.Size(222, 31);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Municipality";
+            this.label1.Text = " SA Municipality";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pnlHead2

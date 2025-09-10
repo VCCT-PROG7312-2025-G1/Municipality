@@ -152,4 +152,4 @@ namespace Municipality_ST10263992_PROG7312.Tools
             Count = 0;
         }
     }
-}
+}//GitHub Copilot(2023) Linked Lists Available at: github.com / features / copilot(Accessed: [10/09/2025]).
