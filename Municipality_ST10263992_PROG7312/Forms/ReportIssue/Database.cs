@@ -40,7 +40,7 @@ namespace Municipality_ST10263992_PROG7312.Forms.ReportIssue
             while (current != null && count < RecentCount)
             {
                 var issue = current.Value;
-                result += $"Location: {issue.Location}, Category: {issue.Category}, Description: {issue.Description}, Reported At: {issue.ReportedAt}\n";
+                result += $"\n\nLocation: {issue.Location}\nCategory: {issue.Category}\nDescription: {issue.Description}\nReported At: {issue.ReportedAt}\n";
                 current = current.Previous;
                 count++;
             }

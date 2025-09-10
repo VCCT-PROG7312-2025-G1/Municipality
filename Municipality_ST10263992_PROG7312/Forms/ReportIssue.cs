@@ -17,22 +17,31 @@ namespace Municipality_ST10263992_PROG7312.Forms
         public frmReportIssues()
         {
             InitializeComponent();
-            pnlMainPage.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.SecondaryColour);
-            pnlMainMenuInner.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.OtherColour);
+            pnlMainPage.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkWhite);
+            pnlMainPageInner.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
+            flowLayoutPanel1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkPurple);
             btnSubmit.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonColour);
             btnMedia.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonColour);
-            panel1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.AccentColour);
+
+            Location.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
+            Categories.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
+            Description.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
+            Media.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
+
+            flowLayoutPanel1.AutoSize = false;
+            flowLayoutPanel1.Location = new Point { X = pnlMainPageInner.Size.Width / 8, Y = pnlMainPageInner.Size.Height / 8 };
 
 
             cmbCategory.Items.AddRange(new string[] { "Pothole", "Burst Pipe", "Power Outage", "Street Light Fault", "Garbage Collection", "Other" });
+            cmbCategory.SelectedIndex = 0;
         }
 
 
         private void btnMedia_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog()) 
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                if(openFileDialog.ShowDialog() == DialogResult.OK)
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     attachmentPath = openFileDialog.FileName;
                     lblMediaAttach.Text = "Attachment: " + System.IO.Path.GetFileName(attachmentPath);
@@ -40,10 +49,6 @@ namespace Municipality_ST10263992_PROG7312.Forms
             }
         }
 
-        private void frmReportIssues_Deactivate(object sender, EventArgs e)
-        {
-            //Application.Exit();
-        }
 
         private void btnExit_Click(object sender, EventArgs e)
         {
@@ -63,33 +68,19 @@ namespace Municipality_ST10263992_PROG7312.Forms
                 return;
             }
 
-            // insert db/store logic here
-                Issue newIssue = new Issue
-                {
-                    Location = txtLocation.Text,
-                    Category = cmbCategory.Text,
-                    Description = redout.Text,
-                    AttachmentPath = attachmentPath,
-                    ReportedAt = DateTime.Now
-                };
+            Issue newIssue = new Issue
+            {
+                Location = txtLocation.Text,
+                Category = cmbCategory.Text,
+                Description = redout.Text,
+                AttachmentPath = attachmentPath,
+                ReportedAt = DateTime.Now
+            };
             Database.Instance.AddIssue(newIssue);
-            //
-
-            MessageBox.Show("Issue submitted successfully.", "Success");
-
-            txtLocation.Clear();
-            cmbCategory.SelectedIndex = -1;
-            redout.Clear();
-            lblMediaAttach.Text = "No file attached";
-            attachmentPath = string.Empty;
-
-          MessageBox.Show(Database.Instance.ToString());
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-
+            MessageBox.Show("Issue reported successfully!", "Success");
+            this.Hide();
+            frmMainMenu mainMenuForm = new frmMainMenu();
+            mainMenuForm.Show();
         }
     }
 }
