@@ -117,38 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Eastern_Cape" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Tools\Images\Eastern_Cape.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Limpopo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Tools\Images\Limpopo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Mpumalanga" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Tools\Images\Mpumalanga.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="KZN" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Tools\Images\KZN.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Gauteng" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Tools\Images\Gauteng.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Western_Cape" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Tools\Images\Western_Cape.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Provinces" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Tools\Images\Provinces.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Northern_Cape" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Tools\Images\Northern_Cape.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Free_State" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Tools\Images\Free_State.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="North_West" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Tools\Images\North_West.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="search" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\search.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

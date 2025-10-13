@@ -334,6 +334,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Main Menu";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMainMenu_FormClosed);
+            this.Load += new System.EventHandler(this.frmMainMenu_Load);
             this.Shown += new System.EventHandler(this.frmMainMenu_Shown);
             this.pnlMainPage.ResumeLayout(false);
             this.panel5.ResumeLayout(false);

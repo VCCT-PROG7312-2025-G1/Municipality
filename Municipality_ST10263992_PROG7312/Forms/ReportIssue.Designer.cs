@@ -46,6 +46,7 @@
             this.btnSubmit = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.pnlMainPage.SuspendLayout();
             this.pnlMainPageInner.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -311,6 +312,7 @@
             this.Name = "frmReportIssues";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Report Issues";
+            this.Load += new System.EventHandler(this.frmReportIssues_Load);
             this.pnlMainPage.ResumeLayout(false);
             this.pnlMainPage.PerformLayout();
             this.pnlMainPageInner.ResumeLayout(false);
@@ -348,5 +350,6 @@
         private System.Windows.Forms.FlowLayoutPanel Media;
         private System.Windows.Forms.FlowLayoutPanel Description;
         private System.Windows.Forms.Panel pnlMainPageInner;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

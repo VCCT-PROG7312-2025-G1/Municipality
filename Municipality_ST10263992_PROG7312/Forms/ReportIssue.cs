@@ -82,5 +82,10 @@ namespace Municipality_ST10263992_PROG7312.Forms
             frmMainMenu mainMenuForm = new frmMainMenu();
             mainMenuForm.Show();
         }
+
+        private void frmReportIssues_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

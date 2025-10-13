@@ -1,5 +1,6 @@
 ﻿using Municipality_ST10263992_PROG7312.Forms;
 using Municipality_ST10263992_PROG7312.Forms.ReportIssue;
+using Municipality_ST10263992_PROG7312.Forms.Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -84,7 +85,14 @@ namespace Municipality_ST10263992_PROG7312
 
         private void btnEvents_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Events feature is under development.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Forms.frmEvent eventsForm = new Forms.frmEvent();
+            this.Hide();
+            eventsForm.Show();
+        }
+
+        private void frmMainMenu_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
