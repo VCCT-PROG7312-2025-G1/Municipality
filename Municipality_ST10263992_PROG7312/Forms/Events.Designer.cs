@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.pnlMainPage = new System.Windows.Forms.Panel();
+            this.btnReset = new System.Windows.Forms.Button();
+            this.dtpSearch = new System.Windows.Forms.DateTimePicker();
             this.cmbCategory = new System.Windows.Forms.ComboBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.edtSearch = new System.Windows.Forms.TextBox();
@@ -41,6 +43,8 @@
             // 
             // pnlMainPage
             // 
+            this.pnlMainPage.Controls.Add(this.btnReset);
+            this.pnlMainPage.Controls.Add(this.dtpSearch);
             this.pnlMainPage.Controls.Add(this.cmbCategory);
             this.pnlMainPage.Controls.Add(this.btnSearch);
             this.pnlMainPage.Controls.Add(this.edtSearch);
@@ -52,11 +56,31 @@
             this.pnlMainPage.Size = new System.Drawing.Size(1022, 814);
             this.pnlMainPage.TabIndex = 0;
             // 
+            // btnReset
+            // 
+            this.btnReset.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+            this.btnReset.Location = new System.Drawing.Point(893, 42);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(75, 31);
+            this.btnReset.TabIndex = 16;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
+            // dtpSearch
+            // 
+            this.dtpSearch.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+            this.dtpSearch.Location = new System.Drawing.Point(413, 43);
+            this.dtpSearch.Name = "dtpSearch";
+            this.dtpSearch.Size = new System.Drawing.Size(248, 30);
+            this.dtpSearch.TabIndex = 15;
+            this.dtpSearch.Value = new System.DateTime(2025, 10, 13, 16, 42, 15, 0);
+            // 
             // cmbCategory
             // 
             this.cmbCategory.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
             this.cmbCategory.FormattingEnabled = true;
-            this.cmbCategory.Location = new System.Drawing.Point(193, 41);
+            this.cmbCategory.Location = new System.Drawing.Point(189, 43);
             this.cmbCategory.Name = "cmbCategory";
             this.cmbCategory.Size = new System.Drawing.Size(201, 31);
             this.cmbCategory.TabIndex = 14;
@@ -65,9 +89,9 @@
             // btnSearch
             // 
             this.btnSearch.Image = global::Municipality_ST10263992_PROG7312.Properties.Resources.search;
-            this.btnSearch.Location = new System.Drawing.Point(657, 42);
+            this.btnSearch.Location = new System.Drawing.Point(855, 42);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(30, 30);
+            this.btnSearch.Size = new System.Drawing.Size(30, 32);
             this.btnSearch.TabIndex = 13;
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
@@ -75,9 +99,9 @@
             // edtSearch
             // 
             this.edtSearch.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
-            this.edtSearch.Location = new System.Drawing.Point(411, 42);
+            this.edtSearch.Location = new System.Drawing.Point(681, 42);
             this.edtSearch.Name = "edtSearch";
-            this.edtSearch.Size = new System.Drawing.Size(231, 30);
+            this.edtSearch.Size = new System.Drawing.Size(168, 30);
             this.edtSearch.TabIndex = 12;
             this.edtSearch.Text = "Search...";
             this.edtSearch.Click += new System.EventHandler(this.edtSearch_Click);
@@ -85,10 +109,10 @@
             // pnlMainPageInner
             // 
             this.pnlMainPageInner.Controls.Add(this.redOut);
-            this.pnlMainPageInner.Location = new System.Drawing.Point(175, 78);
+            this.pnlMainPageInner.Location = new System.Drawing.Point(30, 78);
             this.pnlMainPageInner.Name = "pnlMainPageInner";
             this.pnlMainPageInner.Padding = new System.Windows.Forms.Padding(15);
-            this.pnlMainPageInner.Size = new System.Drawing.Size(725, 691);
+            this.pnlMainPageInner.Size = new System.Drawing.Size(956, 691);
             this.pnlMainPageInner.TabIndex = 11;
             // 
             // redOut
@@ -96,7 +120,7 @@
             this.redOut.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
             this.redOut.Location = new System.Drawing.Point(18, 18);
             this.redOut.Name = "redOut";
-            this.redOut.Size = new System.Drawing.Size(689, 655);
+            this.redOut.Size = new System.Drawing.Size(920, 655);
             this.redOut.TabIndex = 0;
             this.redOut.Text = "";
             // 
@@ -140,5 +164,7 @@
         private System.Windows.Forms.TextBox edtSearch;
         private System.Windows.Forms.RichTextBox redOut;
         private System.Windows.Forms.ComboBox cmbCategory;
+        private System.Windows.Forms.DateTimePicker dtpSearch;
+        private System.Windows.Forms.Button btnReset;
     }
 }

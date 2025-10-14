@@ -7,13 +7,25 @@ using System.Threading.Tasks;
 
 namespace Municipality_ST10263992_PROG7312.Forms.Events
 {
+    public enum EventCategory
+    {
+        None=0,
+        Community,
+        Cultural,
+        Educational,
+        Recreational,
+        Environmental,
+        Health,
+        Social,
+        Other
+    }
     internal class EventItem
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public string Category { get; set; }
+        public EventCategory Category { get; set; } = EventCategory.Other;
         public DateTime EventDate { get; set; }
-        public EventItem(string title, string description,string category, DateTime eventDate)
+        public EventItem(string title, string description, EventCategory category, DateTime eventDate)
         {
             Title = title;
             Description = description;

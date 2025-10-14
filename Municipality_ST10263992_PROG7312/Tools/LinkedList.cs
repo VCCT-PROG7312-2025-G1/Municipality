@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,12 @@ namespace Municipality_ST10263992_PROG7312.Tools
     /// <summary>
     /// Generic doubly-linked list implementation
     /// </summary>
-    internal class LinkedList<T>
+    internal class LinkedList<T> : IEnumerable<T>
     {
         // Reference to the first node in the list
-        public Node<T> Head { get; set; }
+        public Node<T> First { get; set; }
         // Reference to the last node in the list
-        public Node<T> Tail { get; set; }
+        public Node<T> Last { get; set; }
         // Number of elements in the list
         public int Count { get; private set; }
 
@@ -23,8 +24,8 @@ namespace Municipality_ST10263992_PROG7312.Tools
         /// </summary>
         public LinkedList()
         {
-            Head = null;
-            Tail = null;
+            First = null;
+            Last = null;
             Count = 0;
         }
 
@@ -35,16 +36,16 @@ namespace Municipality_ST10263992_PROG7312.Tools
         {
             var newNode = new Node<T>(value);
 
-            if (Head == null) // If list is empty
+            if (First == null) // If list is empty
             {
-                Head = newNode;
-                Tail = newNode;
+                First = newNode;
+                Last = newNode;
             }
             else // Add to the end and update references
             {
-                Tail.Next = newNode;
-                newNode.Previous = Tail;
-                Tail = newNode;
+                Last.Next = newNode;
+                newNode.Previous = Last;
+                Last = newNode;
             }
 
             Count++;
@@ -55,18 +56,18 @@ namespace Municipality_ST10263992_PROG7312.Tools
         /// </summary>
         public void RemoveLast()
         {
-            if (Tail == null)
+            if (Last == null)
                 return;
 
-            if (Tail.Previous != null) // More than one node
+            if (Last.Previous != null) // More than one node
             {
-                Tail = Tail.Previous;
-                Tail.Next = null;
+                Last = Last.Previous;
+                Last.Next = null;
             }
             else // Only one node
             {
-                Head = null;
-                Tail = null;
+                First = null;
+                Last = null;
             }
 
             Count--;
@@ -77,18 +78,18 @@ namespace Municipality_ST10263992_PROG7312.Tools
         /// </summary>
         public void RemoveFirst()
         {
-            if (Head == null)
+            if (First == null)
                 return;
 
-            if (Head.Next != null) // More than one node
+            if (First.Next != null) // More than one node
             {
-                Head = Head.Next;
-                Head.Previous = null;
+                First = First.Next;
+                First.Previous = null;
             }
             else // Only one node
             {
-                Head = null;
-                Tail = null;
+                First = null;
+                Last = null;
             }
 
             Count--;
@@ -99,10 +100,10 @@ namespace Municipality_ST10263992_PROG7312.Tools
         /// </summary>
         public void Remove(T value)
         {
-            if (Head == null)
+            if (First == null)
                 return;
 
-            Node<T> currentNode = Head;
+            Node<T> currentNode = First;
             while (currentNode != null)
             {
                 if (EqualityComparer<T>.Default.Equals(currentNode.Value, value))
@@ -111,13 +112,13 @@ namespace Municipality_ST10263992_PROG7312.Tools
                     if (currentNode.Previous != null)
                         currentNode.Previous.Next = currentNode.Next;
                     else
-                        Head = currentNode.Next;
+                        First = currentNode.Next;
 
                     // Update next node's previous reference
                     if (currentNode.Next != null)
                         currentNode.Next.Previous = currentNode.Previous;
                     else
-                        Tail = currentNode.Previous;
+                        Last = currentNode.Previous;
 
                     Count--;
                     return;
@@ -135,7 +136,7 @@ namespace Municipality_ST10263992_PROG7312.Tools
             if (index < 0 || index >= Count)
                 return null;
 
-            Node<T> currentNode = Head;
+            Node<T> currentNode = First;
             for (int i = 0; i < index; i++)
                 currentNode = currentNode.Next;
 
@@ -147,9 +148,24 @@ namespace Municipality_ST10263992_PROG7312.Tools
         /// </summary>
         public void Clear()
         {
-            Head = null;
-            Tail = null;
+            First = null;
+            Last = null;
             Count = 0;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            Node<T> current = First;
+            while (current != null)
+            {
+                yield return current.Value;
+                current = current.Next;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }//GitHub Copilot(2023) Linked Lists Available at: github.com / features / copilot(Accessed: [10/09/2025]).
