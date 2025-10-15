@@ -49,10 +49,12 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.pnlHead3 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.redOutEvents = new System.Windows.Forms.RichTextBox();
             this.pnlMainPage.SuspendLayout();
             this.panel5.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnlMainMenuInner.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.pnlMainMenuInner1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.pnlMainMenuInner2.SuspendLayout();
@@ -123,6 +125,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.redOutEvents);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel3.Location = new System.Drawing.Point(10, 101);
             this.panel3.Name = "panel3";
@@ -326,6 +329,20 @@
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
+            // redOutEvents
+            // 
+            this.redOutEvents.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.redOutEvents.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.redOutEvents.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.redOutEvents.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+            this.redOutEvents.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(226)))), ((int)(((byte)(236)))));
+            this.redOutEvents.Location = new System.Drawing.Point(0, 0);
+            this.redOutEvents.Name = "redOutEvents";
+            this.redOutEvents.ReadOnly = true;
+            this.redOutEvents.Size = new System.Drawing.Size(292, 373);
+            this.redOutEvents.TabIndex = 2;
+            this.redOutEvents.Text = "";
+            // 
             // frmMainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -344,6 +361,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.pnlMainMenuInner.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.pnlMainMenuInner1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.pnlMainMenuInner2.ResumeLayout(false);
@@ -379,6 +397,7 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.RichTextBox redReportText;
+        private System.Windows.Forms.RichTextBox redOutEvents;
     }
 }
 

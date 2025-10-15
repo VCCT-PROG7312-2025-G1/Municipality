@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Municipality_ST10263992_PROG7312.Tools
 {
@@ -152,7 +153,7 @@ namespace Municipality_ST10263992_PROG7312.Tools
             Last = null;
             Count = 0;
         }
-
+        // Anthropic, 2025
         public IEnumerator<T> GetEnumerator()
         {
             Node<T> current = First;
@@ -168,4 +169,9 @@ namespace Municipality_ST10263992_PROG7312.Tools
             return GetEnumerator();
         }
     }
-}//GitHub Copilot(2023) Linked Lists Available at: github.com / features / copilot(Accessed: [10/09/2025]).
+}
+
+#region References
+// Google. 2025. Google Gemini Pro (Version 2.5). [Large language model]. Available at: https://gemini.google.com/ [Accessed: 13 October 2025].
+//Anthropic. 2025.Claude Sonnet (Version 4.5). [Large language model].Available at: https://claude.ai/ [Accessed: 13 October 2025].
+#endregion

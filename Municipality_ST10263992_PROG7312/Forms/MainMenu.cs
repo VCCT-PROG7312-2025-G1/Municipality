@@ -41,6 +41,7 @@ namespace Municipality_ST10263992_PROG7312
             btnExit.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonClickColour);
 
             redReportText.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
+            redOutEvents.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
 
             panel1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
             panel2.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
@@ -76,6 +77,7 @@ namespace Municipality_ST10263992_PROG7312
         private void frmMainMenu_Shown(object sender, EventArgs e)
         {
             redReportText.Text = Database.Instance.PrintRecentIssues();
+            redOutEvents.Text = Database.Instance.PrintUpcomingEvents(7);
         }
 
         private void btnStatus_Click(object sender, EventArgs e)

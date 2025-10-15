@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReportIssues));
             this.pnlMainPage = new System.Windows.Forms.Panel();
             this.pnlMainPageInner = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -308,6 +309,7 @@
             this.ClientSize = new System.Drawing.Size(1022, 814);
             this.Controls.Add(this.pnlMainPage);
             this.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.Name = "frmReportIssues";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

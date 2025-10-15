@@ -20,12 +20,29 @@ namespace Municipality_ST10263992_PROG7312.Forms
         {
             InitializeComponent();
             pnlMainPage.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkWhite);
-            pnlMainPageInner.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
+            pnlMainInside.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
+            pnlMainPageInner.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkPurple);
+            pnlRecomend.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkPurple);
+            pnlCalender.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkPurple);
+            redRecomend.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
+
             redOut.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
             redOut.Text = GetEventLayout();
+          
             btnSearch.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonColour);
             btnSearch.ForeColor = ColorTranslator.FromHtml("#" + ColourScheme.Text_Colour);
+            btnSearch.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonClickColour);
+
             redOut.Text= Database.Instance.PrintEvents();
+
+            btnReset.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.ErrorColour);
+
+            lblSuggested.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkWhite);
+            lblSuggested.ForeColor = ColorTranslator.FromHtml("#" + ColourScheme.BackgroundColour);
+
+            lblUpcoming.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkWhite);
+            lblUpcoming.ForeColor = ColorTranslator.FromHtml("#" + ColourScheme.BackgroundColour);
+
             //add event enum to combo box
             cmbCategory.DataSource = Enum.GetValues(typeof(EventCategory));
             cmbCategory.SelectedIndex = 0;
@@ -34,6 +51,11 @@ namespace Municipality_ST10263992_PROG7312.Forms
 
             // Add event handler for DateTimePicker
             dtpSearch.ValueChanged += DtpSearch_ValueChanged;
+
+            // Add event handler for Calendar date selection
+            calUpcoming.DateSelected += calUpcoming_DateSelected;
+            DisplayUpcomingEvents();
+            StyleCalendar();
         }
 
         private void Events_Load(object sender, EventArgs e)
@@ -66,11 +88,11 @@ namespace Municipality_ST10263992_PROG7312.Forms
             // Build the display text
             StringBuilder displayText = new StringBuilder();
             displayText.Append(GetEventLayout());
-            displayText.AppendLine("You searched for: ");
+            displayText.Append("You searched for: ");
 
             if (userSearch != "" && userSearch != "Search...")
             {
-                displayText.AppendLine(userSearch);
+                displayText.Append(userSearch);
             }
             else
             {
@@ -112,23 +134,23 @@ namespace Municipality_ST10263992_PROG7312.Forms
 
             if (recommendations.First == null)
             {
-                recommendationText.AppendLine("No recommendations available based on your search history.");
+                recommendationText.AppendLine("No recommendations available");
             }
             else
             {
-                recommendationText.AppendLine("Based on your search history, you might like:\n");
+                recommendationText.AppendLine("You might like:\n");
                 var recCurrent = recommendations.First;
                 while (recCurrent != null)
                 {
                     var eventItem = recCurrent.Value;
                     recommendationText.AppendLine($"Title: {eventItem.Title}");
-                    recommendationText.AppendLine($"Date: {eventItem.EventDate:dd/MM/yyyy}");
-                    recommendationText.AppendLine("--------------------");
+                    recommendationText.AppendLine($"Date: {eventItem.EventDate:dd/MM/yyyy}\n");
                     recCurrent = recCurrent.Next;
                 }
             }
 
-            MessageBox.Show(recommendationText.ToString(), "Recommendations", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            redRecomend.Text = recommendationText.ToString();
+            //MessageBox.Show(recommendationText.ToString(), "Recommendations", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void edtSearch_Click(object sender, EventArgs e)
@@ -146,9 +168,9 @@ namespace Municipality_ST10263992_PROG7312.Forms
         private string GetEventLayout()
         {
             StringBuilder layout = new StringBuilder();
-            layout.AppendLine("========================================================");
-            layout.AppendLine("                                         UPCOMING EVENTS & ANNOUNCEMENTS");
-            layout.AppendLine("========================================================\n");
+            layout.AppendLine("===================================");
+            layout.AppendLine("              UPCOMING EVENTS & ANNOUNCEMENTS");
+            layout.AppendLine("===================================\n");
             return layout.ToString();
         }
 
@@ -161,5 +183,62 @@ namespace Municipality_ST10263992_PROG7312.Forms
             cmbCategory.SelectedIndex = 0;
             datePickerModified = false;
         }
+        private void DisplayUpcomingEvents()
+        {
+            // Get upcoming events for the next 90 days
+            var upcomingEvents = Database.Instance.GetUpcomingEvents(90);
+            var eventDates = new List<DateTime>();
+
+            var current = upcomingEvents.First;
+            while (current != null)
+            {
+                eventDates.Add(current.Value.EventDate.Date);
+                current = current.Next;
+            }
+
+            calUpcoming.BoldedDates = eventDates.ToArray();
+            calUpcoming.UpdateBoldedDates();
+        }
+        private void StyleCalendar()
+        {
+            calUpcoming.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
+            calUpcoming.TitleBackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
+            calUpcoming.TitleForeColor = ColorTranslator.FromHtml("#" + ColourScheme.Text_Colour);
+            calUpcoming.TrailingForeColor = Color.Gray;
+        }
+        private void calUpcoming_DateSelected(object sender, DateRangeEventArgs e)
+        {
+            DateTime selectedDate = e.Start.Date;
+
+            // Search for events on the selected date
+            var eventsOnDate = Database.Instance.SearchEvents(null, EventCategory.None, selectedDate);
+
+            StringBuilder displayText = new StringBuilder();
+            displayText.AppendLine(GetEventLayout());
+            displayText.AppendLine($"Events for {selectedDate:dd MMMM yyyy}:\n");
+
+            if (eventsOnDate.First != null)
+            {
+                var current = eventsOnDate.First;
+                while (current != null)
+                {
+                    var eventItem = current.Value;
+                    displayText.AppendLine("---------------------------------------------------");
+                    displayText.AppendLine($"Title: {eventItem.Title}");
+                    displayText.AppendLine($"Category: {eventItem.Category}");
+                    displayText.AppendLine($"Description: {eventItem.Description}\n");
+                    current = current.Next;
+                }
+            }
+            else
+            {
+                displayText.AppendLine("No events scheduled for this date.");
+            }
+
+            // Display the events for the selected date in the main text area
+            redOut.Text = displayText.ToString();
+        }
+
+      
     }
 }

@@ -73,7 +73,7 @@ namespace Municipality_ST10263992_PROG7312.Tools
 
             return results;
         }
-
+        // Google, 2025
         public LinkedList<EventItem> GetRecommendations()
         {
             var recommendations = new LinkedList<EventItem>();
@@ -114,20 +114,26 @@ namespace Municipality_ST10263992_PROG7312.Tools
         public LinkedList<EventItem> GetUpcomingEvents(int days)
         {
             var results = new LinkedList<EventItem>();
-            var endDate = DateTime.Now.AddDays(days);
+            var allEvents = Database.Instance.GetEvents();
+            var today = DateTime.Now.Date;
+            var endDate = today.AddDays(days);
 
-            foreach (var dateQueue in dateIndex)
+            foreach (var eventItem in allEvents)
             {
-                if (dateQueue.Key >= DateTime.Now && dateQueue.Key <= endDate)
+                if (eventItem.EventDate.Date >= today && eventItem.EventDate.Date <= endDate)
                 {
-                    foreach (var eventItem in dateQueue.Value)
-                    {
-                        results.AddLast(eventItem);
-                    }
+                    results.AddLast(eventItem);
                 }
             }
 
-            return results;
+            // Sort the results by date and add to a new LinkedList
+            var sortedResults = new LinkedList<EventItem>();
+            foreach (var item in results.OrderBy(e => e.EventDate))
+            {
+                sortedResults.AddLast(item);
+            }
+            return sortedResults;
         }
     }
 }
+ 

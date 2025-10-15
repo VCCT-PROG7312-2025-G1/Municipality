@@ -1,6 +1,7 @@
 ﻿using Municipality_ST10263992_PROG7312.Forms.Events;
 using Municipality_ST10263992_PROG7312.Tools;
 using System;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Municipality_ST10263992_PROG7312.Forms.ReportIssue
@@ -14,14 +15,13 @@ namespace Municipality_ST10263992_PROG7312.Forms.ReportIssue
         private LinkedList<Issue> issues = new LinkedList<Issue>();
         private EventSearch eventSearch;
 
-        // Add constructor to initialize sample events
+        
         private Database()
         {
             events = new LinkedList<EventItem>();
             issues = new LinkedList<Issue>();
             eventSearch = new EventSearch();
             
-            // Add sample events
             SampleEventData.Initialize(this);
         }
 
@@ -74,13 +74,13 @@ namespace Municipality_ST10263992_PROG7312.Forms.ReportIssue
 
         private string redOutLayout()
         {
-            return @"======================================================== 
-                                         UPCOMING EVENTS & ANNOUNCEMENTS" + "\n"+ "========================================================";
+            return @"=================================== 
+              UPCOMING EVENTS & ANNOUNCEMENTS" + "\n"+ "===================================";
         }
 
         public string PrintEvents()
         {
-            string result = redOutLayout(); // Now calling the local method
+            string result = redOutLayout();
             var current = events.Last;
             while (current != null)
             {
@@ -100,5 +100,33 @@ namespace Municipality_ST10263992_PROG7312.Forms.ReportIssue
         {
             return eventSearch.GetRecommendations();
         }
+        public LinkedList<EventItem> GetUpcomingEvents(int days)
+        {
+            return eventSearch.GetUpcomingEvents(days);
+        }
+        public string PrintUpcomingEvents(int days)
+        {
+            var upcomingEvents = GetUpcomingEvents(days);
+            StringBuilder result = new StringBuilder();
+            result.AppendLine($"Upcoming Events:");
+            result.AppendLine($"(Next {days} Days)");
+            if (upcomingEvents.First == null)
+            {
+                result.AppendLine("\nNo upcoming events in this period.");
+            }
+            else
+            {
+                var current = upcomingEvents.First;
+                while (current != null)
+                {
+                    var eventItem = current.Value;
+                    result.AppendLine($"\nTitle: {eventItem.Title}");
+                    result.AppendLine($"Date: {eventItem.EventDate:dd MMMM yyyy}");
+                    current = current.Next;
+                }
+            }
+            return result.ToString();
+        }
     }
+    
 }
