@@ -82,7 +82,10 @@ namespace Municipality_ST10263992_PROG7312
 
         private void btnStatus_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Status feature is under development.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Status feature is under development.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            frmService serviceForm = new frmService();
+            this.Hide();
+            serviceForm.Show();
         }
 
         private void btnEvents_Click(object sender, EventArgs e)

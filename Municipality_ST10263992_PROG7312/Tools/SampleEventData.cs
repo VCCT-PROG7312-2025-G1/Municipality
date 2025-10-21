@@ -50,6 +50,13 @@ namespace Municipality_ST10263992_PROG7312.Forms.Events
                 EventCategory.Cultural,
                 DateTime.Now.AddDays(10)
             ));
+
+            // Add sample service requests
+            database.AddServiceRequest(new ServiceRequest(101, "Pothole Repair", "Roads", "123 Main St", DateTime.Now.AddDays(-5), 2) { Status = RequestStatus.Pending });
+            database.AddServiceRequest(new ServiceRequest(105, "Broken Streetlight", "Electricity", "Corner of Oak & Pine", DateTime.Now.AddDays(-2), 1) { Status = RequestStatus.InProgress });
+            database.AddServiceRequest(new ServiceRequest(102, "Water Leak", "Water", "456 Maple Ave", DateTime.Now.AddDays(-10), 1) { Status = RequestStatus.Completed });
+            database.AddServiceRequest(new ServiceRequest(108, "Fallen Tree Branch", "Parks", "City Park, near playground", DateTime.Now.AddDays(-1), 3) { Status = RequestStatus.Pending });
+            database.AddServiceRequest(new ServiceRequest(104, "Missed Garbage Collection", "Sanitation", "789 Elm St", DateTime.Now.AddDays(-3), 2) { Status = RequestStatus.Completed });
         }
     }
 }

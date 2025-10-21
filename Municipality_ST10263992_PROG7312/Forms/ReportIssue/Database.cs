@@ -1,6 +1,7 @@
 ﻿using Municipality_ST10263992_PROG7312.Forms.Events;
 using Municipality_ST10263992_PROG7312.Tools;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
@@ -11,26 +12,162 @@ namespace Municipality_ST10263992_PROG7312.Forms.ReportIssue
         private const int RecentCount = 3;
         public static Database Instance { get; } = new Database();
 
-        private LinkedList<EventItem> events = new LinkedList<EventItem>();
-        private LinkedList<Issue> issues = new LinkedList<Issue>();
+        private Tools.LinkedList<EventItem> events = new Tools.LinkedList<EventItem>();
+        private Tools.LinkedList<Issue> issues = new Tools.LinkedList<Issue>();
+        private AVLTree serviceRequests = new AVLTree();
+        private MinHeap serviceRequestQueue = new MinHeap(); // Priority Queue for service requests
         private EventSearch eventSearch;
+
+        // Graph-related fields
+        private Graph serviceLocationGraph;
+        private Dictionary<int, ServiceRequest> vertexToServiceRequestMap;
+        private Dictionary<int, int> serviceRequestIdToVertexMap;
 
         
         private Database()
         {
-            events = new LinkedList<EventItem>();
-            issues = new LinkedList<Issue>();
+            events = new Tools.LinkedList<EventItem>();
+            issues = new Tools.LinkedList<Issue>();
+            serviceRequests = new AVLTree();
+            serviceRequestQueue = new MinHeap();
             eventSearch = new EventSearch();
             
             SampleEventData.Initialize(this);
+            BuildServiceRequestGraph();
         }
 
-        public LinkedList<Issue> GetIssues()
+        public void AddServiceRequest(ServiceRequest request)
+        {
+            serviceRequests.Insert(request);
+            // Only add active requests to the priority queue
+            if (request.Status != RequestStatus.Completed && request.Status != RequestStatus.Cancelled)
+            {
+                serviceRequestQueue.Insert(request);
+            }
+            BuildServiceRequestGraph(); // Rebuild graph when data changes
+        }
+
+        public ServiceRequest FindServiceRequestById(int id)
+        {
+            return serviceRequests.Search(id);
+        }
+
+        public void DeleteServiceRequest(int id)
+        {
+            var requestToRemove = serviceRequests.Search(id);
+            if (requestToRemove != null)
+            {
+                serviceRequests.Delete(id);
+                serviceRequestQueue.Remove(requestToRemove);
+                BuildServiceRequestGraph(); // Rebuild graph when data changes
+            }
+        }
+
+        /// <summary>
+        /// Retrieves and removes the most urgent, active service request.
+        /// </summary>
+        /// <returns>The most urgent active ServiceRequest, or null if none are available.</returns>
+        public ServiceRequest GetNextUrgentServiceRequest()
+        {
+            while (serviceRequestQueue.Count > 0)
+            {
+                var urgentRequest = serviceRequestQueue.ExtractMin();
+
+                if (urgentRequest == null) continue; // Should not happen, but for safety
+
+                // If the request is active, it's the one we want.
+                if (urgentRequest.Status != RequestStatus.Completed && urgentRequest.Status != RequestStatus.Cancelled)
+                {
+                    // Also remove it from the main AVL tree to keep data consistent
+                    serviceRequests.Delete(urgentRequest.Id);
+                    BuildServiceRequestGraph(); // Rebuild graph
+                    return urgentRequest;
+                }
+                // If the request was completed/cancelled, it's already removed from the heap.
+                // The loop will continue to find the next most urgent active request.
+            }
+
+            return null; // No active service requests were found in the queue.
+        }
+
+        public Tools.LinkedList<ServiceRequest> GetAllServiceRequests()
+        {
+            var list = new Tools.LinkedList<ServiceRequest>();
+            serviceRequests.InOrderTraversal(req => list.AddLast(req));
+            return list;
+        }
+
+        /// <summary>
+        /// Builds a graph where vertices are service requests and edges are weighted by random distances.
+        /// </summary>
+        private void BuildServiceRequestGraph()
+        {
+            var allRequests = new List<ServiceRequest>();
+            var current = GetAllServiceRequests().First;
+            while (current != null)
+            {
+                allRequests.Add(current.Value);
+                current = current.Next;
+            }
+
+            int vertexCount = allRequests.Count;
+
+            serviceLocationGraph = new Graph(vertexCount);
+            vertexToServiceRequestMap = new Dictionary<int, ServiceRequest>();
+            serviceRequestIdToVertexMap = new Dictionary<int, int>();
+
+            // Map requests to vertices
+            for (int i = 0; i < vertexCount; i++)
+            {
+                vertexToServiceRequestMap[i] = allRequests[i];
+                serviceRequestIdToVertexMap[allRequests[i].Id] = i;
+            }
+
+            // Create a fully connected graph with random weights (distances)
+            if (vertexCount > 1)
+            {
+                Random rand = new Random();
+                for (int i = 0; i < vertexCount; i++)
+                {
+                    for (int j = i + 1; j < vertexCount; j++)
+                    {
+                        int distance = rand.Next(5, 100); // Random distance between 5 and 99
+                        serviceLocationGraph.AddEdge(i, j, distance);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the optimized route (Minimum Spanning Tree) for visiting all service request locations.
+        /// </summary>
+        /// <returns>A tuple containing the total distance and a list of edges in the route.</returns>
+        public (int totalWeight, List<(ServiceRequest from, ServiceRequest to, int weight)> edges) GetOptimizedRoute()
+        {
+            if (serviceLocationGraph == null)
+            {
+                return (0, new List<(ServiceRequest from, ServiceRequest to, int weight)>());
+            }
+
+            var (totalWeight, mstEdges) = serviceLocationGraph.PrimMST();
+
+            var resultEdges = new List<(ServiceRequest from, ServiceRequest to, int weight)>();
+            foreach (var edge in mstEdges)
+            {
+                var fromRequest = vertexToServiceRequestMap[edge.u];
+                var toRequest = vertexToServiceRequestMap[edge.v];
+                resultEdges.Add((fromRequest, toRequest, edge.w));
+            }
+
+            return (totalWeight, resultEdges);
+        }
+
+        public Tools.LinkedList<Issue> GetIssues()
         {
             return issues;
         }
 
-        public LinkedList<EventItem> GetEvents()
+        public Tools.LinkedList<EventItem> GetEvents()
         {
             return events;
         }
@@ -91,16 +228,16 @@ namespace Municipality_ST10263992_PROG7312.Forms.ReportIssue
             return result;
         }
 
-        public LinkedList<EventItem> SearchEvents(string searchTerm, EventCategory category, DateTime? searchDate = null)
+        public Tools.LinkedList<EventItem> SearchEvents(string searchTerm, EventCategory category, DateTime? searchDate = null)
         {
             return eventSearch.SearchEvents(searchTerm, category, searchDate);
         }
 
-        public LinkedList<EventItem> GetRecommendations()
+        public Tools.LinkedList<EventItem> GetRecommendations()
         {
             return eventSearch.GetRecommendations();
         }
-        public LinkedList<EventItem> GetUpcomingEvents(int days)
+        public Tools.LinkedList<EventItem> GetUpcomingEvents(int days)
         {
             return eventSearch.GetUpcomingEvents(days);
         }
