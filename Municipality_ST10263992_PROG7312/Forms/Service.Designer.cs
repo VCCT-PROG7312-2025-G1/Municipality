@@ -129,6 +129,7 @@
             this.redOut.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.redOut.Location = new System.Drawing.Point(10, 22);
             this.redOut.Name = "redOut";
+            this.redOut.ReadOnly = true;
             this.redOut.Size = new System.Drawing.Size(700, 252);
             this.redOut.TabIndex = 0;
             this.redOut.Text = "";
@@ -147,6 +148,7 @@
             this.redDetails.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.redDetails.Location = new System.Drawing.Point(14, 61);
             this.redDetails.Name = "redDetails";
+            this.redDetails.ReadOnly = true;
             this.redDetails.Size = new System.Drawing.Size(190, 298);
             this.redDetails.TabIndex = 7;
             this.redDetails.Text = "";

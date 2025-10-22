@@ -146,44 +146,51 @@ namespace Municipality_ST10263992_PROG7312.Forms
 
         private void btnNext_Click(object sender, EventArgs e)
         {
+            // Define statuses to exclude
+            var excludedStatuses = new List<RequestStatus> { RequestStatus.Completed, RequestStatus.Cancelled };
 
+            // Get all requests and filter out the excluded ones
+            var activeRequests = Database.Instance.GetAllServiceRequests()
+                                           .Where(r => !excludedStatuses.Contains(r.Status))
+                                           .ToList();
 
-            //var allRequests = Database.Instance.GetAllServiceRequests().OrderBy(r => r.Id).ToList();
+            if (!activeRequests.Any())
+            {
+                MessageBox.Show("No active service requests available.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                redDetails.Clear();
+                redDetails.Tag = null;
+                return;
+            }
 
-            //if (!allRequests.Any())
-            //{
-            //    MessageBox.Show("No service requests available.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //    return;
-            //}
+            int currentId = -1;
+            if (redDetails.Tag is int tag)
+            {
+                currentId = tag;
+            }
 
-            //int currentId = -1;
-            //if (redDetails.Tag is int)
-            //{
-            //    currentId = (int)redDetails.Tag;
-            //}
+            if (currentId == -1)
+            {
+                // If nothing is displayed, show the first active request
+                DisplayDetailsTab(activeRequests.First());
+            }
+            else
+            {
+                // Find the index of the currently displayed request in the active list
+                int currentIndex = activeRequests.FindIndex(r => r.Id == currentId);
 
-            //if (currentId == -1)
-            //{
-            //    // Nothing is displayed, so show the first one
-            //    DisplayDetailsTab(allRequests.First());
-            //}
-            //else
-            //{
-            //    // Find the current request in the list
-            //    int currentIndex = allRequests.FindIndex(r => r.Id == currentId);
-
-            //    if (currentIndex != -1)
-            //    {
-            //        // Get the next index, wrapping around if necessary
-            //        int nextIndex = (currentIndex + 1) % allRequests.Count;
-            //        DisplayDetailsTab(allRequests[nextIndex]);
-            //    }
-            //    else
-            //    {
-            //        // The currently displayed ID is not in the list anymore, show the first one
-            //        DisplayDetailsTab(allRequests.First());
-            //    }
-            //}
+                if (currentIndex != -1)
+                {
+                    // Get the next index, wrapping around the active list
+                    int nextIndex = (currentIndex + 1) % activeRequests.Count;
+                    DisplayDetailsTab(activeRequests[nextIndex]);
+                }
+                else
+                {
+                    // If the current ID isn't in the active list (e.g., it was just completed),
+                    // show the first active request.
+                    DisplayDetailsTab(activeRequests.First());
+                }
+            }
         }
 
         private void btnGenerateRoute_Click(object sender, EventArgs e)
@@ -203,15 +210,15 @@ namespace Municipality_ST10263992_PROG7312.Forms
             mstEdges = routeEdges.Select(edge => (idToVertex[edge.from.Id], idToVertex[edge.to.Id], edge.weight)).ToList();
 
             // Display textual route details
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"Optimal Route Found (Prim's MST)");
-            sb.AppendLine($"Total Distance: {totalWeight} units");
-            sb.AppendLine(new string('-', 40));
-            foreach (var edge in routeEdges)
-            {
-                sb.AppendLine($"Connect: (ID {edge.from.Id}) {edge.from.Title} <-> (ID {edge.to.Id}) {edge.to.Title} [Dist: {edge.weight}]");
-            }
-            redDetails.Text = sb.ToString();
+            //StringBuilder sb = new StringBuilder();
+            //sb.AppendLine($"Optimal Route Found (Prim's MST)");
+            //sb.AppendLine($"Total Distance: {totalWeight} units");
+            //sb.AppendLine(new string('-', 40));
+            //foreach (var edge in routeEdges)
+            //{
+            //    sb.AppendLine($"Connect: (ID {edge.from.Id}) {edge.from.Title} <-> (ID {edge.to.Id}) {edge.to.Title} [Dist: {edge.weight} km]");
+            //}
+            //redDetails.Text = sb.ToString();
 
             // Trigger a repaint of the graph panel
             pnlGraph.Invalidate();
@@ -230,6 +237,9 @@ namespace Municipality_ST10263992_PROG7312.Forms
             if (mstEdges != null)
             {
                 using (Pen mstPen = new Pen(Color.Tomato, 3))
+                // Create specific font and brush for the distance text
+                using (Font distanceFont = new Font("Arial", 10, FontStyle.Italic))
+                using (Brush distanceBrush = new SolidBrush(Color.FromArgb(0,0,0)))
                 {
                     foreach (var edge in mstEdges)
                     {
@@ -237,9 +247,10 @@ namespace Municipality_ST10263992_PROG7312.Forms
                         Point p2 = nodePositions[edge.v];
                         g.DrawLine(mstPen, p1, p2);
 
-                        // Draw edge weight
+                        // Draw edge weight with "km"
+                        string distanceText = $"{edge.w} km";
                         Point midPoint = new Point((p1.X + p2.X) / 2, (p1.Y + p2.Y) / 2);
-                        g.DrawString(edge.w.ToString(), this.Font, Brushes.White, midPoint);
+                        g.DrawString(distanceText, distanceFont, distanceBrush, midPoint);
                     }
                 }
             }

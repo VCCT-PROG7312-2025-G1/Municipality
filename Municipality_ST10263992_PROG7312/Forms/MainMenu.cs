@@ -42,6 +42,7 @@ namespace Municipality_ST10263992_PROG7312
 
             redReportText.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
             redOutEvents.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
+            redServices.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
 
             panel1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
             panel2.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
@@ -78,11 +79,11 @@ namespace Municipality_ST10263992_PROG7312
         {
             redReportText.Text = Database.Instance.PrintRecentIssues();
             redOutEvents.Text = Database.Instance.PrintUpcomingEvents(7);
+            redServices.Text = Database.Instance.PrintServiceRequestSummary();
         }
 
         private void btnStatus_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("Status feature is under development.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             frmService serviceForm = new frmService();
             this.Hide();
             serviceForm.Show();

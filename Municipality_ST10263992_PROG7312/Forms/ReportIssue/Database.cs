@@ -2,6 +2,7 @@
 using Municipality_ST10263992_PROG7312.Tools;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -263,6 +264,41 @@ namespace Municipality_ST10263992_PROG7312.Forms.ReportIssue
                 }
             }
             return result.ToString();
+        }
+        public string PrintServiceRequestSummary()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Active Service Requests:");
+
+            var allRequests = new List<ServiceRequest>();
+            var current = GetAllServiceRequests().First;
+            while (current != null)
+            {
+                allRequests.Add(current.Value);
+                current = current.Next;
+            }
+
+            var urgentRequests = allRequests
+                .Where(r => r.Status == RequestStatus.Pending || r.Status == RequestStatus.InProgress)
+                .OrderBy(r => r.Priority)
+                .Take(RecentCount)
+                .ToList();
+
+            if (!urgentRequests.Any())
+            {
+                sb.AppendLine("\nNo active service requests.");
+            }
+            else
+            {
+                foreach (var request in urgentRequests)
+                {
+                    sb.AppendLine($"\nTitle: {request.Title}");
+                    sb.AppendLine($"Location: {request.Location}");
+                    //sb.AppendLine($"Priority: {request.Priority}");
+                }
+            }
+
+            return sb.ToString();
         }
     }
     

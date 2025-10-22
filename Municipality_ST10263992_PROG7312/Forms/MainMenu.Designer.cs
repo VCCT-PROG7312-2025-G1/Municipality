@@ -34,6 +34,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlMainMenuInner = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.redOutEvents = new System.Windows.Forms.RichTextBox();
             this.btnEvents = new System.Windows.Forms.Button();
             this.pnlMainMenuInner1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -49,7 +50,7 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.pnlHead3 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.redOutEvents = new System.Windows.Forms.RichTextBox();
+            this.redServices = new System.Windows.Forms.RichTextBox();
             this.pnlMainPage.SuspendLayout();
             this.panel5.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -58,6 +59,7 @@
             this.pnlMainMenuInner1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.pnlMainMenuInner2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.pnlHead1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.pnlHead2.SuspendLayout();
@@ -131,6 +133,20 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(292, 373);
             this.panel3.TabIndex = 5;
+            // 
+            // redOutEvents
+            // 
+            this.redOutEvents.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.redOutEvents.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.redOutEvents.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.redOutEvents.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+            this.redOutEvents.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(226)))), ((int)(((byte)(236)))));
+            this.redOutEvents.Location = new System.Drawing.Point(0, 0);
+            this.redOutEvents.Name = "redOutEvents";
+            this.redOutEvents.ReadOnly = true;
+            this.redOutEvents.Size = new System.Drawing.Size(292, 373);
+            this.redOutEvents.TabIndex = 2;
+            this.redOutEvents.Text = "";
             // 
             // btnEvents
             // 
@@ -222,6 +238,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.redServices);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(10, 101);
             this.panel1.Name = "panel1";
@@ -329,19 +346,17 @@
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
-            // redOutEvents
+            // redServices
             // 
-            this.redOutEvents.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.redOutEvents.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.redOutEvents.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.redOutEvents.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
-            this.redOutEvents.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(226)))), ((int)(((byte)(236)))));
-            this.redOutEvents.Location = new System.Drawing.Point(0, 0);
-            this.redOutEvents.Name = "redOutEvents";
-            this.redOutEvents.ReadOnly = true;
-            this.redOutEvents.Size = new System.Drawing.Size(292, 373);
-            this.redOutEvents.TabIndex = 2;
-            this.redOutEvents.Text = "";
+            this.redServices.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.redServices.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+            this.redServices.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(226)))), ((int)(((byte)(236)))));
+            this.redServices.Location = new System.Drawing.Point(0, 0);
+            this.redServices.Name = "redServices";
+            this.redServices.ReadOnly = true;
+            this.redServices.Size = new System.Drawing.Size(292, 373);
+            this.redServices.TabIndex = 0;
+            this.redServices.Text = "";
             // 
             // frmMainMenu
             // 
@@ -365,6 +380,7 @@
             this.pnlMainMenuInner1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.pnlMainMenuInner2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.pnlHead1.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
@@ -398,6 +414,7 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.RichTextBox redReportText;
         private System.Windows.Forms.RichTextBox redOutEvents;
+        private System.Windows.Forms.RichTextBox redServices;
     }
 }
 
