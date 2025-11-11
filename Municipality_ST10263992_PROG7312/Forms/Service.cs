@@ -21,17 +21,18 @@ namespace Municipality_ST10263992_PROG7312.Forms
         private List<Point> nodePositions;
         private List<(int u, int v, int w)> mstEdges;
         private Dictionary<int, ServiceRequest> vertexMap;
+        private ServiceRequest _selectedRequest = null;
         private int _selectedNodeIndex = -1; // track selected node
 
         public frmService()
         {
             InitializeComponent();
-            pnlMainPage.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkWhite);
+            pnlMainPage.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkGrey);
             pnlMainInside.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
-            pnlInner.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkPurple);
-            pnlDisplaySearch.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
-            pnlOutService.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
-            pnlSearch.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
+            pnlInner.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
+            pnlDisplaySearch.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            pnlOutService.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            pnlSearch.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
             redOut.Font = new Font("Courier New", 9.75F, FontStyle.Bold);
             
             // Hook up the Paint event for the graph panel
@@ -103,22 +104,80 @@ namespace Municipality_ST10263992_PROG7312.Forms
 
         private void DisplayDetailsTab(ServiceRequest request)
         {
+            _selectedRequest = request; // Keep track of the selected request
+
             if (request == null)
             {
                 redDetails.Clear();
+                redDetails.Tag = null;
                 return;
             }
             
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("===============================");
-            sb.AppendLine($"ID: {request.Id}");
-            sb.AppendLine($"Title: {request.Title}");
+            sb.AppendLine($"Title: {request.Title}\n");
+            sb.AppendLine("====================");
+            sb.AppendLine($"\nID: {request.Id}");
             sb.AppendLine($"Category: {request.Category}");
             sb.AppendLine($"Location: {request.Location}");
             sb.AppendLine($"Status: {request.Status}");
-            sb.AppendLine("===============================");
+            //sb.AppendLine("====================");
             redDetails.Text = sb.ToString();
             redDetails.Tag = request.Id; // Store the ID in the Tag property
+        }
+
+        private void HighlightRequestInTableView(ServiceRequest request)
+        {
+            // Reset previous highlighting
+            redOut.SelectAll();
+            redOut.SelectionBackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
+            redOut.DeselectAll();
+
+            if (request == null) return;
+
+            // Highlight the found request in the table view
+            var serviceRequests = Database.Instance.GetAllServiceRequests().ToList();
+            if (!serviceRequests.Any(r => r.Id == request.Id)) return; // Don't highlight if not in list
+
+            int idWidth = Math.Max("ID".Length, serviceRequests.Max(r => r.Id.ToString().Length)) + 2;
+            int titleWidth = Math.Max("Title".Length, serviceRequests.Max(r => r.Title.Length)) + 2;
+            int categoryWidth = Math.Max("Category".Length, serviceRequests.Max(r => r.Category.Length)) + 2;
+            int locationWidth = Math.Max("Location".Length, serviceRequests.Max(r => r.Location.Length)) + 2;
+            int statusWidth = 10 + 2;
+
+            string format = $"{{0,-{idWidth}}} {{1,-{titleWidth}}} {{2,-{categoryWidth}}} {{3,-{locationWidth}}} {{4,-{statusWidth}}}";
+            string requestLine = string.Format(format, request.Id, request.Title, request.Category, request.Location, request.Status);
+
+            int startIndex = redOut.Text.IndexOf(requestLine);
+            if (startIndex != -1)
+            {
+                redOut.Select(startIndex, requestLine.TrimEnd().Length);
+                redOut.SelectionBackColor = Color.Green;
+                // Do not deselect, so the highlight remains visible.
+                // redOut.DeselectAll(); 
+            }
+        }
+
+        private void HighlightRequest(ServiceRequest request)
+        {
+            DisplayDetailsTab(request);
+            HighlightRequestInTableView(request);
+
+            int nodeIndex = -1;
+            if (vertexMap != null && request != null)
+            {
+                foreach (var entry in vertexMap)
+                {
+                    if (entry.Value.Id == request.Id)
+                    {
+                        nodeIndex = entry.Key;
+                        break;
+                    }
+                }
+            }
+
+            _selectedNodeIndex = nodeIndex;
+            // Always invalidate the panel. The paint event will only run if it's visible.
+            pnlGraph.Invalidate();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -129,19 +188,31 @@ namespace Municipality_ST10263992_PROG7312.Forms
                 var request = Database.Instance.FindServiceRequestById(id);
                 if (request != null)
                 {
-                    DisplayDetailsTab(request);
+                    HighlightRequest(request);
                 }
                 else
                 {
                     MessageBox.Show("Service request with the specified ID not found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    redDetails.Clear();
-                    redDetails.Tag = null;
+                    HighlightRequest(null); // Clear selection
+                    edtSearch.Clear();
                 }
             }
             else
             {
                 MessageBox.Show("Please enter a valid numeric ID.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+
+        private void Btn_MouseEnter(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+            btn.ForeColor = System.Drawing.Color.FromArgb(0,0,0); 
+        }
+        private void Btn_MouseLeave(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+            btn.ForeColor = System.Drawing.Color.FromArgb(227, 226, 236); 
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -195,7 +266,7 @@ namespace Municipality_ST10263992_PROG7312.Forms
 
         private void btnGenerateRoute_Click(object sender, EventArgs e)
         {
-            redDetails.Clear();
+            //redDetails.Clear();
             pnlGraph.BackgroundImage= Municipality_ST10263992_PROG7312.Properties.Resources.cptImageCrop;
             var (totalWeight, routeEdges) = Database.Instance.GetOptimizedRoute();
 
@@ -209,16 +280,20 @@ namespace Municipality_ST10263992_PROG7312.Forms
 
             mstEdges = routeEdges.Select(edge => (idToVertex[edge.from.Id], idToVertex[edge.to.Id], edge.weight)).ToList();
 
-            // Display textual route details
-            //StringBuilder sb = new StringBuilder();
-            //sb.AppendLine($"Optimal Route Found (Prim's MST)");
-            //sb.AppendLine($"Total Distance: {totalWeight} units");
-            //sb.AppendLine(new string('-', 40));
-            //foreach (var edge in routeEdges)
-            //{
-            //    sb.AppendLine($"Connect: (ID {edge.from.Id}) {edge.from.Title} <-> (ID {edge.to.Id}) {edge.to.Title} [Dist: {edge.weight} km]");
-            //}
-            //redDetails.Text = sb.ToString();
+            // If a request was selected before generating the map, find its node index
+            if (_selectedRequest != null)
+            {
+                int nodeIndex = -1;
+                foreach (var entry in vertexMap)
+                {
+                    if (entry.Value.Id == _selectedRequest.Id)
+                    {
+                        nodeIndex = entry.Key;
+                        break;
+                    }
+                }
+                _selectedNodeIndex = nodeIndex;
+            }
 
             // Trigger a repaint of the graph panel
             pnlGraph.Invalidate();
@@ -301,20 +376,27 @@ namespace Municipality_ST10263992_PROG7312.Forms
         {
             const int nodeRadius = 10;
             if (nodePositions == null || !nodePositions.Any()) return;
+
+            ServiceRequest clickedRequest = null;
+            int clickedNodeIndex = -1;
+
             for (int i = 0; i < nodePositions.Count; i++)
             {
                 Point center = nodePositions[i];
                 double distance = Math.Sqrt(Math.Pow(e.X - center.X, 2) + Math.Pow(e.Y - center.Y, 2));
-                if (distance <= nodeRadius) {
-                    if (vertexMap.TryGetValue(i,out ServiceRequest clickedRequest))
+                if (distance <= nodeRadius)
+                {
+                    if (vertexMap.TryGetValue(i, out clickedRequest))
                     {
-                        DisplayDetailsTab(clickedRequest);
-
-                        _selectedNodeIndex = i;
-                        pnlGraph.Invalidate(); // Redraw to show selection
-                        return;
+                        clickedNodeIndex = i;
+                        break; 
                     }
                 }
+            }
+
+            if (clickedRequest != null)
+            {
+                HighlightRequest(clickedRequest);
             }
         }
 
@@ -324,17 +406,29 @@ namespace Municipality_ST10263992_PROG7312.Forms
 
             if (urgentRequest != null)
             {
-                DisplayDetailsTab(urgentRequest);
+                // 1. Set the selection state and invalidate the graph.
+                HighlightRequest(urgentRequest);
+
+                // 2. Show the message box.
                 MessageBox.Show($"Processing next urgent task:\nID: {urgentRequest.Id} - {urgentRequest.Title}", "Next Priority Task", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
-                // Refresh the main table view since a request has been removed
+
+                // 3. After the message box is closed, re-apply the table highlight,
+                //    as it may have been cleared when the control lost focus.
+                HighlightRequestInTableView(urgentRequest);
+
+                // 4. Now, refresh the main table to remove the processed item.
                 TableView();
+
+                // 5. Finally, clear the selection from all views for the next operation.
+                HighlightRequest(null);
             }
             else
             {
                 MessageBox.Show("No active service requests in the priority queue.", "Queue Empty", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                redDetails.Clear();
+                HighlightRequest(null);
             }
         }
+
+
     }
 }

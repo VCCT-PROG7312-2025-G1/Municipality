@@ -183,6 +183,16 @@ namespace Municipality_ST10263992_PROG7312.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap search_resized {
+            get {
+                object obj = ResourceManager.GetObject("search_resized", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Western_Cape {
             get {
                 object obj = ResourceManager.GetObject("Western_Cape", resourceCulture);

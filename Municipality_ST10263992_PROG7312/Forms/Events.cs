@@ -19,14 +19,15 @@ namespace Municipality_ST10263992_PROG7312.Forms
         public frmEvent()
         {
             InitializeComponent();
-            pnlMainPage.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkWhite);
+            pnlMainPage.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkGrey);
             pnlMainInside.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
-            pnlMainPageInner.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkPurple);
-            pnlRecomend.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkPurple);
-            pnlCalender.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkPurple);
-            redRecomend.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
+            panel1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
+            pnlMainPageInner.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
+            pnlRecomend.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
+            pnlCalender.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
+            redRecomend.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
 
-            redOut.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
+            redOut.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
             redOut.Text = GetEventLayout();
           
             btnSearch.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonColour);
@@ -37,11 +38,11 @@ namespace Municipality_ST10263992_PROG7312.Forms
 
             btnReset.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.ErrorColour);
 
-            lblSuggested.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkWhite);
-            lblSuggested.ForeColor = ColorTranslator.FromHtml("#" + ColourScheme.BackgroundColour);
+            //lblSuggested.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkGrey);
+            //lblSuggested.ForeColor = ColorTranslator.FromHtml("#" + ColourScheme.Tan);
 
-            lblUpcoming.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkWhite);
-            lblUpcoming.ForeColor = ColorTranslator.FromHtml("#" + ColourScheme.BackgroundColour);
+            //lblUpcoming.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkGrey);
+            //lblUpcoming.ForeColor = ColorTranslator.FromHtml("#" + ColourScheme.Tan);
 
             //add event enum to combo box
             cmbCategory.DataSource = Enum.GetValues(typeof(EventCategory));
@@ -201,7 +202,7 @@ namespace Municipality_ST10263992_PROG7312.Forms
         }
         private void StyleCalendar()
         {
-            calUpcoming.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
+            calUpcoming.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
             calUpcoming.TitleBackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
             calUpcoming.TitleForeColor = ColorTranslator.FromHtml("#" + ColourScheme.Text_Colour);
             calUpcoming.TrailingForeColor = Color.Gray;

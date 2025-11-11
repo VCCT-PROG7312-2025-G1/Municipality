@@ -17,16 +17,16 @@ namespace Municipality_ST10263992_PROG7312.Forms
         public frmReportIssues()
         {
             InitializeComponent();
-            pnlMainPage.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkWhite);
+            pnlMainPage.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkGrey);
             pnlMainPageInner.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
-            flowLayoutPanel1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkPurple);
+            flowLayoutPanel1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
             btnSubmit.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonColour);
             btnMedia.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonColour);
 
-            Location.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
-            Categories.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
-            Description.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
-            Media.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
+            Location.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            Categories.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            Description.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            Media.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
 
             flowLayoutPanel1.AutoSize = false;
             flowLayoutPanel1.Location = new Point { X = pnlMainPageInner.Size.Width / 8, Y = pnlMainPageInner.Size.Height / 8 };

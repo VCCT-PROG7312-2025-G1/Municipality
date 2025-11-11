@@ -124,6 +124,8 @@
     <None Include="Resources\search.png" />
     <None Include="Resources\cptImage.png" />
     <None Include="Resources\cptImageCrop.png" />
+    <Content Include="Resources\search_resized.png" />
+    <None Include="Resources\search_resized1.png" />
     <Content Include="Tools\Images\Eastern_Cape.png" />
     <Content Include="Tools\Images\Free_State.png" />
     <Content Include="Tools\Images\Gauteng.png" />

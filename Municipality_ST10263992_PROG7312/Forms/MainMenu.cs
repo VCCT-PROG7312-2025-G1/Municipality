@@ -18,10 +18,11 @@ namespace Municipality_ST10263992_PROG7312
         public frmMainMenu()
         {
             InitializeComponent();
-            pnlMainPage.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkWhite);
-            pnlMainMenuInner.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkPurple);
-            pnlMainMenuInner1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkPurple);
-            pnlMainMenuInner2.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkPurple);
+            pnlMainPage.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
+            tableLayoutPanel1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
+            pnlMainMenuInner.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
+            pnlMainMenuInner1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
+            pnlMainMenuInner2.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
 
 
             btnReportIssue.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonColour);
@@ -40,22 +41,32 @@ namespace Municipality_ST10263992_PROG7312
             btnExit.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.ErrorColour);
             btnExit.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonClickColour);
 
-            redReportText.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
-            redOutEvents.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
-            redServices.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
+            redReportText.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            redOutEvents.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            redServices.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
 
-            panel1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
-            panel2.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
-            panel3.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.LighterPurple);
+            panel1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            panel2.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            panel3.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
 
-            pnlHead1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkPurple);
-            pnlHead2.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkPurple);
-            pnlHead3.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkPurple);
+            pnlHead1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
+            pnlHead2.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
+            pnlHead3.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
 
-            panel4.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.PrimaryColour);
+            //panel4.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.OffWhite);
 
             panel5.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
 
+        }
+        private void Btn_MouseEnter(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+            btn.ForeColor = System.Drawing.Color.FromArgb(0, 0, 0);
+        }
+        private void Btn_MouseLeave(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+            btn.ForeColor = System.Drawing.Color.FromArgb(227, 226, 236);
         }
 
         private void btnReportIssue_Click(object sender, EventArgs e)
@@ -97,6 +108,11 @@ namespace Municipality_ST10263992_PROG7312
         }
 
         private void frmMainMenu_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
