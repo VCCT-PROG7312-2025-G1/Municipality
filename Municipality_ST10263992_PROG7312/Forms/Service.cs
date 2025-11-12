@@ -471,3 +471,10 @@ namespace Municipality_ST10263992_PROG7312.Forms
 
     }
 }
+#region References
+// Google. 2025. Google Gemini Pro (Version 2.5). [Large language model]. Available at: https://gemini.google.com/ [Accessed: 12 November 2025].
+// Anthropic. 2025. Claude Sonnet (Version 4.5). [Large language model].Available at: https://claude.ai/ [Accessed: 12 November 2025].
+// Microsoft. 2024. C# language version 7.3. [online] Available at: <https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version> [Accessed 12 November 2025].
+// GeeksforGeeks. 2023. How to Draw Lines and Shapes in C# Windows Forms Application. [online] Available at: <https://www.geeksforgeeks.org/how-to-draw-lines-and-shapes-in-c-sharp-windows-forms-application/> [Accessed 12 November 2025].
+// GeeksforGeeks. 2025. Prim’s Algorithm for Minimum Spanning Tree (MST) [online] Available at: <https://www.geeksforgeeks.org/dsa/prims-minimum-spanning-tree-mst-greedy-algo-5/> [Accessed 12 November 2025].
+#endregion
