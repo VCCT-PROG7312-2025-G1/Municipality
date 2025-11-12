@@ -8,9 +8,9 @@
 
 ## Demo Video
 
-Basic showcase of part 1 of application:
+Basic showcase of application:
 
-[Part 1 Municipality Application](https://youtu.be/7rW6xv57haM)
+[Part 3 Municipality Application](https://youtu.be/-ggfnW9AUUY)
 
 ---
 
