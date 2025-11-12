@@ -73,26 +73,35 @@ namespace Municipality_ST10263992_PROG7312.Forms
             locationWidth += 2;
             statusWidth += 2;
 
-            // Create format string
-            string format = $"{{0,-{idWidth}}} {{1,-{titleWidth}}} {{2,-{categoryWidth}}} {{3,-{locationWidth}}} {{4,-{statusWidth}}}\n";
 
-            // Build the output string
-            StringBuilder sb = new StringBuilder();
+            // Corrected format string for the main part of the line
+            string format = $"{{0,-{idWidth}}}{{1,-{titleWidth}}}{{2,-{categoryWidth}}}{{3,-{locationWidth}}}";
+            string headerFormat = $"{{0,-{idWidth}}}{{1,-{titleWidth}}}{{2,-{categoryWidth}}}{{3,-{locationWidth}}}{{4,-{statusWidth}}}\n";
 
-            // Append Header
-            sb.AppendFormat(format, "ID", "Title", "Category", "Location", "Status");
-
-            // Append Separator
+            // Build the output string line by line to apply colors
+            redOut.SelectionColor = redOut.ForeColor;
+            redOut.AppendText(string.Format(headerFormat, "ID", "Title", "Category", "Location", "Status"));
             int totalWidth = idWidth + titleWidth + categoryWidth + locationWidth + statusWidth;
-            sb.AppendLine(new string('=', totalWidth > 0 ? totalWidth - 1 : 0));
+            redOut.AppendText(new string('=', totalWidth > 0 ? totalWidth - 1 : 0) + "\n");
 
-            // Append Data
+            // Append Data with colors
             foreach (var request in serviceRequests)
             {
-                sb.AppendFormat(format, request.Id, request.Title, request.Category, request.Location, request.Status);
+                redOut.SelectionColor = redOut.ForeColor; // Reset to default
+                redOut.AppendText(string.Format(format, request.Id, request.Title, request.Category, request.Location));
+
+                // Pad the status manually to align it correctly
+                string statusText = request.Status.ToString();
+                redOut.AppendText(statusText.PadRight(statusWidth));
+
+                // Now, select and color the status text we just added
+                redOut.Select(redOut.Text.Length - statusWidth, statusText.Length);
+                redOut.SelectionColor = GetColorForStatus(request.Status);
+                redOut.AppendText("\n");
             }
 
-            redOut.Text = sb.ToString();
+            redOut.DeselectAll();
+            redOut.ResumeLayout(); // Resume layout
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -112,17 +121,40 @@ namespace Municipality_ST10263992_PROG7312.Forms
                 redDetails.Tag = null;
                 return;
             }
-            
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"Title: {request.Title}\n");
-            sb.AppendLine("====================");
-            sb.AppendLine($"\nID: {request.Id}");
-            sb.AppendLine($"Category: {request.Category}");
-            sb.AppendLine($"Location: {request.Location}");
-            sb.AppendLine($"Status: {request.Status}");
-            //sb.AppendLine("====================");
-            redDetails.Text = sb.ToString();
+
+            // Use AppendText to allow for coloring
+            redDetails.Clear();
+            redDetails.SelectionColor = redDetails.ForeColor; // Reset to default color
+
+            redDetails.AppendText($"Title: {request.Title}\n\n");
+            redDetails.AppendText("====================\n\n");
+            redDetails.AppendText($"ID: {request.Id}\n");
+            redDetails.AppendText($"Category: {request.Category}\n");
+            redDetails.AppendText($"Location: {request.Location}\n");
+            redDetails.AppendText("Status: ");
+
+            // Set color for status and append it
+            redDetails.SelectionColor = GetColorForStatus(request.Status);
+            redDetails.AppendText(request.Status.ToString());
+
+            // Reset color and set tag
+            redDetails.SelectionColor = redDetails.ForeColor;
             redDetails.Tag = request.Id; // Store the ID in the Tag property
+        }
+
+        private Color GetColorForStatus(RequestStatus status)
+        {
+            switch (status)
+            {
+                case RequestStatus.Completed:
+                    return Color.LawnGreen;
+                case RequestStatus.InProgress:
+                    return Color.Orange;
+                case RequestStatus.Pending:
+                    return Color.IndianRed;
+                default:
+                    return redOut.ForeColor; // Default color
+            }
         }
 
         private void HighlightRequestInTableView(ServiceRequest request)
@@ -151,7 +183,7 @@ namespace Municipality_ST10263992_PROG7312.Forms
             if (startIndex != -1)
             {
                 redOut.Select(startIndex, requestLine.TrimEnd().Length);
-                redOut.SelectionBackColor = Color.Green;
+                redOut.SelectionBackColor = Color.Blue;
                 // Do not deselect, so the highlight remains visible.
                 // redOut.DeselectAll(); 
             }
@@ -262,19 +294,26 @@ namespace Municipality_ST10263992_PROG7312.Forms
                     DisplayDetailsTab(activeRequests.First());
                 }
             }
+            updateMap();
+            HighlightRequest(_selectedRequest);
         }
 
         private void btnGenerateRoute_Click(object sender, EventArgs e)
         {
             //redDetails.Clear();
-            pnlGraph.BackgroundImage= Municipality_ST10263992_PROG7312.Properties.Resources.cptImageCrop;
+            updateMap();
+        }
+
+        private void updateMap()
+        {
+            pnlGraph.BackgroundImage = Municipality_ST10263992_PROG7312.Properties.Resources.cptImageCrop;
             var (totalWeight, routeEdges) = Database.Instance.GetOptimizedRoute();
 
             // Store data needed for drawing
             var allRequests = Database.Instance.GetAllServiceRequests().ToList();
             vertexMap = allRequests.Select((req, index) => new { req, index })
                                      .ToDictionary(x => x.index, x => x.req);
-            
+
             var idToVertex = allRequests.Select((req, index) => new { req, index })
                                         .ToDictionary(x => x.req.Id, x => x.index);
 
@@ -313,7 +352,7 @@ namespace Municipality_ST10263992_PROG7312.Forms
             {
                 using (Pen mstPen = new Pen(Color.Tomato, 3))
                 // Create specific font and brush for the distance text
-                using (Font distanceFont = new Font("Arial", 10, FontStyle.Italic))
+                using (Font distanceFont = new Font("Arial", 10, FontStyle.Bold))
                 using (Brush distanceBrush = new SolidBrush(Color.FromArgb(0,0,0)))
                 {
                     foreach (var edge in mstEdges)
