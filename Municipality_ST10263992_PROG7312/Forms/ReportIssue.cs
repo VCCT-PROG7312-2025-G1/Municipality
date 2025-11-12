@@ -19,17 +19,23 @@ namespace Municipality_ST10263992_PROG7312.Forms
             InitializeComponent();
             pnlMainPage.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkGrey);
             pnlMainPageInner.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
+            panel1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
             flowLayoutPanel1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
             btnSubmit.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonColour);
             btnMedia.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonColour);
 
-            Location.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
-            Categories.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
-            Description.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
-            Media.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            flowLayoutPanel2.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            flowLayoutPanel3.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            flowLayoutPanel4.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            flowLayoutPanel5.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
 
             flowLayoutPanel1.AutoSize = false;
-            flowLayoutPanel1.Location = new Point { X = pnlMainPageInner.Size.Width / 8, Y = pnlMainPageInner.Size.Height / 8 };
+            pnlMainPageInner.Resize += (sender, e) =>
+            {
+                flowLayoutPanel1.Location = new Point(
+                    (pnlMainPageInner.Width - flowLayoutPanel1.Width) / 2,
+                    (pnlMainPageInner.Height - flowLayoutPanel1.Height) / 2);
+            };
 
 
             cmbCategory.Items.AddRange(new string[] { "Pothole", "Burst Pipe", "Power Outage", "Street Light Fault", "Garbage Collection", "Other" });
@@ -86,6 +92,16 @@ namespace Municipality_ST10263992_PROG7312.Forms
         private void frmReportIssues_Load(object sender, EventArgs e)
         {
 
+        }
+        private void Btn_MouseEnter(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+            btn.ForeColor = System.Drawing.Color.FromArgb(0, 0, 0);
+        }
+        private void Btn_MouseLeave(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+            btn.ForeColor = System.Drawing.Color.FromArgb(227, 226, 236);
         }
     }
 }

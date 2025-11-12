@@ -22,17 +22,22 @@ namespace Municipality_ST10263992_PROG7312.Forms
             pnlMainPage.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkGrey);
             pnlMainInside.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
             panel1.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
-            pnlMainPageInner.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
-            pnlRecomend.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
-            pnlCalender.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
-            redRecomend.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            //pnlMainPageInner.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.Maroon);
+            pnlRecomend.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            pnlCalender.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            panel2.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            panel3.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            redRecomend.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
 
-            redOut.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkRed);
+            redOut.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.DarkerGrey);
             redOut.Text = GetEventLayout();
           
             btnSearch.BackColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonColour);
             btnSearch.ForeColor = ColorTranslator.FromHtml("#" + ColourScheme.Text_Colour);
             btnSearch.FlatAppearance.BorderColor = ColorTranslator.FromHtml("#" + ColourScheme.ButtonClickColour);
+
+            cmbCategory.DataSource = Enum.GetValues(typeof(EventCategory));
+            cmbCategory.SelectedIndex = 0;
 
             redOut.Text= Database.Instance.PrintEvents();
 
@@ -45,8 +50,7 @@ namespace Municipality_ST10263992_PROG7312.Forms
             //lblUpcoming.ForeColor = ColorTranslator.FromHtml("#" + ColourScheme.Tan);
 
             //add event enum to combo box
-            cmbCategory.DataSource = Enum.GetValues(typeof(EventCategory));
-            cmbCategory.SelectedIndex = 0;
+            
             
             //string imagePath = ""; fix image load
 
@@ -57,6 +61,16 @@ namespace Municipality_ST10263992_PROG7312.Forms
             calUpcoming.DateSelected += calUpcoming_DateSelected;
             DisplayUpcomingEvents();
             StyleCalendar();
+        }
+        private void Btn_MouseEnter(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+            btn.ForeColor = System.Drawing.Color.FromArgb(0, 0, 0);
+        }
+        private void Btn_MouseLeave(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+            btn.ForeColor = System.Drawing.Color.FromArgb(227, 226, 236);
         }
 
         private void Events_Load(object sender, EventArgs e)
@@ -76,7 +90,7 @@ namespace Municipality_ST10263992_PROG7312.Forms
             {
                 userSearch = "";
             }
-            EventCategory category = (EventCategory)cmbCategory.SelectedIndex;
+            EventCategory category = (EventCategory)cmbCategory.SelectedItem;
        
             DateTime? searchDate = null;
             if (datePickerModified)
@@ -102,7 +116,7 @@ namespace Municipality_ST10263992_PROG7312.Forms
 
             if (cmbCategory.SelectedItem != null)
             {
-                displayText.AppendLine("In category: " + cmbCategory.SelectedItem.ToString());
+                displayText.AppendLine("\nIn category: " + cmbCategory.SelectedItem.ToString());
             }
 
             if (datePickerModified)
@@ -239,7 +253,5 @@ namespace Municipality_ST10263992_PROG7312.Forms
             // Display the events for the selected date in the main text area
             redOut.Text = displayText.ToString();
         }
-
-      
     }
 }
